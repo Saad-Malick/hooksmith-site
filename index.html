@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saad — Hook Writer for Gaming & Anime Brands</title>
+  <meta name="description" content="I turn game ideas into scroll-stopping hooks. Gen-Z gaming copy that actually converts." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+
+  <!-- Scanline overlay -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- Noise texture -->
+  <div class="noise" aria-hidden="true"></div>
+
+  <!-- ===================== NAV ===================== -->
+  <nav class="nav">
+    <div class="nav-logo">HOOKSMITH<span class="accent">.</span></div>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#offer">Offer</a>
+      <a href="#cta" class="nav-cta">Get Free Hooks →</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#work" onclick="closeMobileMenu()">Work</a>
+    <a href="#offer" onclick="closeMobileMenu()">Offer</a>
+    <a href="#cta" onclick="closeMobileMenu()">Get Free Hooks →</a>
+  </div>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="hero-bg-text" aria-hidden="true">HOOK</div>
+
+    <div class="hero-content">
+      <div class="hero-tag reveal">
+        <span class="dot"></span> Available for projects
+      </div>
+
+      <h1 class="hero-title reveal reveal-delay-1">
+        Your game deserves<br />
+        <span class="title-stroke">better hooks.</span>
+      </h1>
+
+      <p class="hero-sub reveal reveal-delay-2">
+        I write scroll-stopping copy for <strong>gaming & anime brands</strong>.<br />
+        Gen-Z energy. Main character voice. Every time.
+      </p>
+
+      <div class="hero-ctas reveal reveal-delay-3">
+        <a href="#cta" class="btn-primary">
+          <span>DM "HOOK" — Get 3 Free</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#work" class="btn-ghost">See the work</a>
+      </div>
+
+      <div class="hero-stats reveal reveal-delay-4">
+        <div class="stat">
+          <span class="stat-num">30</span>
+          <span class="stat-label">Day build in public</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Free hooks, no pitch</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">0</span>
+          <span class="stat-label">Generic copy, ever</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hook-card hook-card--1">
+        <span class="hook-label">HOOK 01</span>
+        <p>"You were never meant to be the sidekick."</p>
+      </div>
+      <div class="hook-card hook-card--2">
+        <span class="hook-label">HOOK 02</span>
+        <p>"The tutorial ends. The real game begins. You're not ready."</p>
+      </div>
+      <div class="hook-card hook-card--3">
+        <span class="hook-label">HOOK 03</span>
+        <p>"Every legend started with one bad run. This is yours."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MARQUEE ===================== -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      <span>SCROLL-STOPPING HOOKS</span>
+      <span class="accent">✦</span>
+      <span>GAMING COPY</span>
+      <span class="accent">✦</span>
+      <span>ANIME BRAND VOICE</span>
+      <span class="accent">✦</span>
+      <span>GEN-Z ENERGY</span>
+      <span class="accent">✦</span>
+      <span>MAIN CHARACTER ONLY</span>
+      <span class="accent">✦</span>
+      <span>SCROLL-STOPPING HOOKS</span>
+      <span class="accent">✦</span>
+      <span>GAMING COPY</span>
+      <span class="accent">✦</span>
+      <span>ANIME BRAND VOICE</span>
+      <span class="accent">✦</span>
+      <span>GEN-Z ENERGY</span>
+      <span class="accent">✦</span>
+      <span>MAIN CHARACTER ONLY</span>
+      <span class="accent">✦</span>
+    </div>
+  </div>
+
+  <!-- ===================== WORK / SPEC ===================== -->
+  <section class="work" id="work">
+    <div class="section-header reveal">
+      <span class="section-tag">// SPEC WORK</span>
+      <h2>Hooks that <em>hit</em>.</h2>
+      <p>Real copy, fake games. This is what your brand could sound like.</p>
+    </div>
+
+    <div class="hooks-grid">
+
+      <div class="spec-card reveal">
+        <div class="spec-card-top">
+          <span class="game-tag">RPG · Open World</span>
+          <span class="spec-badge">Spec</span>
+        </div>
+        <h3 class="spec-game">ELDEN RIFT</h3>
+        <div class="hooks-list">
+          <div class="hook-item">
+            <span class="hook-num">01</span>
+            <p>You didn't choose this world. It chose you. Now survive it.</p>
+          </div>
+          <div class="hook-item">
+            <span class="hook-num">02</span>
+            <p>The map is a lie. The quest marker is a lie. You are the only truth left.</p>
+          </div>
+          <div class="hook-item">
+            <span class="hook-num">03</span>
+            <p>Every NPC remembers you dying. You don't. That's the point.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card reveal">
+        <div class="spec-card-top">
+          <span class="game-tag">Gacha · Anime</span>
+          <span class="spec-badge">Spec</span>
+        </div>
+        <h3 class="spec-game">FRACTURE PULL</h3>
+        <div class="hooks-list">
+          <div class="hook-item">
+            <span class="hook-num">01</span>
+            <p>You pulled for a 5-star. You got the character you actually needed.</p>
+          </div>
+          <div class="hook-item">
+            <span class="hook-num">02</span>
+            <p>She's not overpowered. You're just playing her wrong.</p>
+          </div>
+          <div class="hook-item">
+            <span class="hook-num">03</span>
+            <p>The banner ends in 12 hours. Your bank account says no. Your team says yes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card reveal">
+        <div class="spec-card-top">
+          <span class="game-tag">FPS · Tactical</span>
+          <span class="spec-badge">Spec</span>
+        </div>
+        <h3 class="spec-game">GHOSTLINE</h3>
+        <div class="hooks-list">
+          <div class="hook-item">
+            <span class="hook-num">01</span>
+            <p>Your aim is fine. Your game sense isn't. Let's fix that.</p>
+          </div>
+          <div class="hook-item">
+            <span class="hook-num">02</span>
+            <p>The kill feed shows your name. Not the way you wanted.</p>
+          </div>
+          <div class="hook-item">
+            <span class="hook-num">03</span>
+            <p>Last player alive. Wrong loadout. Perfect timing.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== OFFER ===================== -->
+  <section class="offer" id="offer">
+    <div class="section-header reveal">
+      <span class="section-tag">// THE OFFER</span>
+      <h2>Start for <em>free</em>.</h2>
+      <p>No pitch. No fluff. Just hooks that work.</p>
+    </div>
+
+    <div class="offer-grid">
+      <div class="offer-card offer-card--free reveal">
+        <div class="offer-card-header">
+          <span class="offer-tier">FREE</span>
+          <span class="offer-price">₹0</span>
+        </div>
+        <ul class="offer-list">
+          <li><span class="check">✓</span> 3 custom hooks for your game/brand</li>
+          <li><span class="check">✓</span> DM "HOOK" to get started</li>
+          <li><span class="check">✓</span> 48-hour turnaround</li>
+          <li><span class="muted">✗</span> No revision round</li>
+          <li><span class="muted">✗</span> No strategy call</li>
+        </ul>
+        <a href="#cta" class="btn-primary w-full">Claim Free Hooks →</a>
+      </div>
+
+      <div class="offer-card offer-card--paid reveal">
+        <div class="offer-badge-wrap"><span class="offer-coming">Coming Soon</span></div>
+        <div class="offer-card-header">
+          <span class="offer-tier">HOOK PACK</span>
+          <span class="offer-price">₹999<span class="offer-per">/drop</span></span>
+        </div>
+        <ul class="offer-list">
+          <li><span class="check">✓</span> 10 hooks, fully custom</li>
+          <li><span class="check">✓</span> Platform-adapted (IG, TikTok, Twitter)</li>
+          <li><span class="check">✓</span> 1 revision round</li>
+          <li><span class="check">✓</span> 72-hour turnaround</li>
+          <li><span class="check">✓</span> Strategy note included</li>
+        </ul>
+        <button class="btn-ghost w-full" disabled>Waitlist →</button>
+      </div>
+
+      <div class="offer-card offer-card--collab reveal">
+        <div class="offer-badge-wrap"><span class="offer-coming">By DM</span></div>
+        <div class="offer-card-header">
+          <span class="offer-tier">COLLAB</span>
+          <span class="offer-price">Let's talk</span>
+        </div>
+        <ul class="offer-list">
+          <li><span class="check">✓</span> Ongoing brand voice work</li>
+          <li><span class="check">✓</span> Monthly hook retainer</li>
+          <li><span class="check">✓</span> Content strategy input</li>
+          <li><span class="check">✓</span> Full creative ownership</li>
+        </ul>
+        <a href="#cta" class="btn-ghost w-full">DM Me →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA ===================== -->
+  <section class="cta-section" id="cta">
+    <div class="cta-inner reveal">
+      <div class="cta-glow" aria-hidden="true"></div>
+      <span class="section-tag">// GET STARTED</span>
+      <h2 class="cta-title">3 free hooks.<br /><span class="title-stroke">Your brand. Right now.</span></h2>
+      <p class="cta-sub">Drop your game/brand idea below. I'll send 3 hooks to your Instagram DM within 48 hours. No strings.</p>
+
+      <form class="cta-form" id="ctaForm" name="hook-requests" netlify onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Your name" required autocomplete="off" />
+          <input type="text" name="brand" placeholder="Your game / brand idea" required autocomplete="off" />
+        </div>
+        <input type="text" name="instagram" placeholder="Your Instagram handle (so I can DM you)" required autocomplete="off" />
+        <textarea name="vibe" placeholder="What's the vibe? (e.g. dark RPG, cozy gacha, competitive FPS...)" rows="3"></textarea>
+        <button type="submit" class="btn-primary w-full" id="submitBtn">
+          <span id="btnText">Send My Idea — Get 3 Free Hooks</span>
+        </button>
+      </form>
+
+      <div class="form-success" id="formSuccess" style="display:none">
+        <div class="success-icon">⚡</div>
+        <h3>You're in the queue.</h3>
+        <p>I'll slide into your DMs within 48 hours with 3 custom hooks. Watch your notifications.</p>
+        <p class="success-sub">While you wait → <a href="https://www.instagram.com/becatchywithsaad/" target="_blank" rel="noopener">Follow on Instagram</a></p>
+      </div>
+
+      <p class="cta-disclaimer">No spam. Just hooks. Unsubscribe anytime (by ignoring my DM, honestly).</p>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">HOOKSMITH<span class="accent">.</span></div>
+      <p class="footer-line">Writing copy that makes people stop scrolling & start feeling.</p>
+      <div class="footer-links">
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+        <span>·</span>
+        <a href="mailto:saadmalick31@gmail.com">Email</a>
+      </div>
+      <p class="footer-copy">© 2025 Saad. All hooks reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

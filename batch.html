@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hook Pack — ₹999 Batch | HOOKSMITH</title>
+  <meta name="description" content="10 custom hooks per batch. 50 slots. Drops every 48 hours. Gaming & anime niche only." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ---- BATCH PAGE SPECIFIC ---- */
+
+    /* Back link */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color 0.2s;
+      margin-bottom: 32px;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { transition: transform 0.2s; }
+    .back-link:hover svg { transform: translateX(-3px); }
+
+    /* Hero */
+    .batch-hero {
+      min-height: 60svh;
+      padding: calc(var(--nav-h) + 80px) clamp(20px, 5vw, 60px) 60px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+    }
+    .batch-hero-bg {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-display);
+      font-size: clamp(120px, 20vw, 280px);
+      letter-spacing: -0.02em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(232,255,71,0.04);
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .batch-hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .batch-hero-content h1 {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 10vw, 100px);
+      letter-spacing: 0.01em;
+      line-height: 0.95;
+      margin-bottom: 20px;
+    }
+    .title-stroke {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--accent);
+    }
+    .batch-hero-content p {
+      color: var(--text-muted);
+      font-size: 17px;
+      line-height: 1.65;
+      max-width: 520px;
+    }
+
+    /* Status Section */
+    .batch-status {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 60px clamp(20px, 5vw, 60px);
+    }
+    .status-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .status-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .status-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* Timer */
+    .timer-card { border-color: rgba(232,255,71,0.15); }
+    .timer {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+    }
+    .time-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .time-block span:first-child {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 6vw, 68px);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: var(--text);
+      min-width: 2ch;
+      text-align: center;
+      transition: color 0.3s;
+    }
+    .time-unit {
+      font-family: var(--font-mono);
+      font-size: 9px !important;
+      letter-spacing: 0.14em;
+      color: var(--text-dim) !important;
+      text-transform: uppercase;
+    }
+    .time-sep {
+      font-family: var(--font-display);
+      font-size: 48px;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+    .timer-sub {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* Slots */
+    .slot-display {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .slot-num {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 6vw, 68px);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: var(--accent);
+    }
+    .slot-sep {
+      font-family: var(--font-display);
+      font-size: 32px;
+      color: var(--text-dim);
+    }
+    .slot-total {
+      font-family: var(--font-display);
+      font-size: 32px;
+      color: var(--text-dim);
+    }
+    .slot-bar-wrap { display: flex; flex-direction: column; gap: 8px; }
+    .slot-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .slot-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 999px;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 10px rgba(232,255,71,0.4);
+    }
+    .slot-warning {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    /* Details Section */
+    .batch-details {
+      padding: 100px clamp(20px, 5vw, 60px);
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .detail-block { display: flex; flex-direction: column; gap: 28px; }
+    .detail-block h2 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 52px);
+      letter-spacing: 0.03em;
+      line-height: 1;
+    }
+
+    .detail-list { display: flex; flex-direction: column; gap: 16px; }
+    .detail-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.25s;
+    }
+    .detail-item:hover { border-color: var(--border-hi); }
+    .detail-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .detail-item-text { display: flex; flex-direction: column; gap: 3px; }
+    .detail-item-title {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      text-transform: uppercase;
+    }
+    .detail-item-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* What you get cards */
+    .deliverable-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .deliverable-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .deliverable-card:hover {
+      border-color: rgba(232,255,71,0.2);
+      background: linear-gradient(135deg, var(--bg-card), rgba(232,255,71,0.02));
+    }
+    .deliverable-num {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+    }
+    .deliverable-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .deliverable-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Filter line */
+    .filter-line-wrap {
+      padding: 0 clamp(20px, 5vw, 60px) 80px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .filter-line {
+      border: 1px solid rgba(232,255,71,0.15);
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(90deg, rgba(232,255,71,0.04), transparent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 24px 32px;
+      font-family: var(--font-display);
+      font-size: clamp(18px, 2.5vw, 26px);
+      letter-spacing: 0.04em;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    /* Form Section */
+    .batch-form-section {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      padding: 100px clamp(20px, 5vw, 60px);
+    }
+    .batch-form-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .batch-form-inner .section-tag { display: block; margin-bottom: 16px; }
+    .batch-form-inner h2 {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 7vw, 64px);
+      letter-spacing: 0.02em;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .batch-form-inner > p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .batch-form {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .batch-form input,
+    .batch-form textarea,
+    .batch-form select {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-hi);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: none;
+      appearance: none;
+    }
+    .batch-form input::placeholder,
+    .batch-form textarea::placeholder { color: var(--text-dim); }
+    .batch-form input:focus,
+    .batch-form textarea:focus,
+    .batch-form select:focus {
+      border-color: rgba(232,255,71,0.5);
+      box-shadow: 0 0 0 3px rgba(232,255,71,0.07);
+    }
+    .batch-form select { cursor: pointer; }
+    .batch-form select option { background: var(--bg-card); }
+
+    .form-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .form-group { display: flex; flex-direction: column; }
+
+    .batch-disclaimer {
+      margin-top: 16px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      text-align: center;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+    }
+
+    /* Success */
+    .batch-success {
+      display: none;
+      text-align: center;
+      padding: 56px 24px;
+      border: 1px solid rgba(232,255,71,0.25);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--bg-card), rgba(232,255,71,0.03));
+    }
+    .batch-success.show { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .success-icon-lg { font-size: 48px; animation: bounce 0.6s ease; }
+    .batch-success h3 {
+      font-family: var(--font-display);
+      font-size: 36px;
+      letter-spacing: 0.05em;
+    }
+    .batch-success p { color: var(--text-muted); font-size: 15px; line-height: 1.7; max-width: 460px; }
+    .batch-success .success-sub { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; }
+    .batch-success a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Timer flash animation */
+    @keyframes flashAccent {
+      0%, 100% { color: var(--text); }
+      50% { color: var(--accent); }
+    }
+    .timer-flash { animation: flashAccent 0.4s ease; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .status-inner { grid-template-columns: 1fr; }
+      .batch-details { grid-template-columns: 1fr; gap: 48px; }
+      .deliverable-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .time-sep { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">HOOKSMITH<span class="accent">.</span></a>
+    <div class="nav-links">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#offer">Offer</a>
+      <a href="index.html#cta" class="nav-cta">Get Free Hooks →</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#work" onclick="closeMobileMenu()">Work</a>
+    <a href="index.html#offer" onclick="closeMobileMenu()">Offer</a>
+    <a href="index.html#cta" onclick="closeMobileMenu()">Get Free Hooks →</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="batch-hero">
+    <div class="batch-hero-bg" aria-hidden="true">BATCH</div>
+    <div class="batch-hero-content">
+      <a href="index.html" class="back-link reveal">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M11 7H3M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to main
+      </a>
+
+      <span class="section-tag reveal">// HOOK PACK — ₹999/DROP</span>
+
+      <h1 class="reveal reveal-delay-1">
+        Batch drops every<br />
+        <span class="title-stroke">48 hours.</span>
+      </h1>
+
+      <p class="reveal reveal-delay-2">
+        10 custom hooks. Platform-adapted for IG, TikTok & Twitter.<br />
+        Delivered in 72 hours. <strong>50 slots per batch — no exceptions.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- BATCH STATUS -->
+  <div class="batch-status">
+    <div class="status-inner">
+
+      <!-- Timer card -->
+      <div class="status-card timer-card reveal">
+        <span class="status-label">// This batch closes in</span>
+        <div class="timer">
+          <div class="time-block">
+            <span id="timer-h">47</span>
+            <span class="time-unit">HRS</span>
+          </div>
+          <div class="time-sep">:</div>
+          <div class="time-block">
+            <span id="timer-m">59</span>
+            <span class="time-unit">MIN</span>
+          </div>
+          <div class="time-sep">:</div>
+          <div class="time-block">
+            <span id="timer-s">59</span>
+            <span class="time-unit">SEC</span>
+          </div>
+        </div>
+        <span class="timer-sub">New batch opens automatically after this one closes.</span>
+      </div>
+
+      <!-- Slots card -->
+      <div class="status-card reveal">
+        <span class="status-label">// Slots filled this batch</span>
+        <div class="slot-display">
+          <span class="slot-num" id="slotsFilled">—</span>
+          <span class="slot-sep">/</span>
+          <span class="slot-total">50</span>
+        </div>
+        <div class="slot-bar-wrap">
+          <div class="slot-bar">
+            <div class="slot-bar-fill" id="slotBarFill" style="width: 0%"></div>
+          </div>
+          <span class="slot-warning" id="slotWarning">Loading slots...</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DETAILS -->
+  <div class="batch-details">
+
+    <!-- Who it's for -->
+    <div class="detail-block reveal">
+      <span class="section-tag">// Who this is for</span>
+      <h2>Not for<br /><em>everyone.</em></h2>
+      <div class="detail-list">
+        <div class="detail-item">
+          <span class="detail-icon">🎮</span>
+          <div class="detail-item-text">
+            <span class="detail-item-title">Gaming creators</span>
+            <span class="detail-item-desc">FPS, RPG, gacha, open world — if it's a game, I speak the language.</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <span class="detail-icon">⚡</span>
+          <div class="detail-item-text">
+            <span class="detail-item-title">Anime brands & creators</span>
+            <span class="detail-item-desc">From casual fan accounts to full brand identities built around anime culture.</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <span class="detail-icon">📈</span>
+          <div class="detail-item-text">
+            <span class="detail-item-title">Creators under 100K who are serious</span>
+            <span class="detail-item-desc">You're building something real. You just need copy that matches that energy.</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <span class="detail-icon">🚫</span>
+          <div class="detail-item-text">
+            <span class="detail-item-title">Not for low-effort requests</span>
+            <span class="detail-item-desc">If you can't describe your niche or content direction — this isn't the right fit yet.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What you get -->
+    <div class="detail-block reveal">
+      <span class="section-tag">// What you get</span>
+      <h2>One batch.<br /><em>10 hooks.</em></h2>
+      <div class="deliverable-grid">
+        <div class="deliverable-card">
+          <span class="deliverable-num">01</span>
+          <span class="deliverable-title">10 Custom Hooks</span>
+          <span class="deliverable-desc">Built around your specific niche, tone, and audience.</span>
+        </div>
+        <div class="deliverable-card">
+          <span class="deliverable-num">02</span>
+          <span class="deliverable-title">Platform Versions</span>
+          <span class="deliverable-desc">Adapted for IG caption, TikTok hook, and Twitter thread opener.</span>
+        </div>
+        <div class="deliverable-card">
+          <span class="deliverable-num">03</span>
+          <span class="deliverable-title">1 Revision Round</span>
+          <span class="deliverable-desc">Didn't land right? One round of changes included.</span>
+        </div>
+        <div class="deliverable-card">
+          <span class="deliverable-num">04</span>
+          <span class="deliverable-title">Strategy Note</span>
+          <span class="deliverable-desc">Why these hooks work and how to sequence them for max impact.</span>
+        </div>
+        <div class="deliverable-card">
+          <span class="deliverable-num">05</span>
+          <span class="deliverable-title">72-Hr Turnaround</span>
+          <span class="deliverable-desc">From confirmed slot to delivery — 72 hours flat.</span>
+        </div>
+        <div class="deliverable-card">
+          <span class="deliverable-num">06</span>
+          <span class="deliverable-title">1 Content Angle</span>
+          <span class="deliverable-desc">A positioning angle for your niche you probably haven't tried yet.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FILTER LINE -->
+  <div class="filter-line-wrap">
+    <div class="filter-line reveal">
+      "I don't work with everyone. I work with creators who are serious about growth."
+    </div>
+  </div>
+
+  <!-- FORM SECTION -->
+  <div class="batch-form-section">
+    <div class="batch-form-inner">
+      <span class="section-tag reveal">// Apply for this batch</span>
+      <h2 class="reveal reveal-delay-1">Tell me about<br /><em>your brand.</em></h2>
+      <p class="reveal reveal-delay-2">Fill this out seriously. Vague answers get skipped. Serious ones get selected.</p>
+
+      <form class="batch-form reveal reveal-delay-3" id="batchForm" name="batch-requests" netlify onsubmit="handleBatchSubmit(event)">
+
+        <div class="form-group">
+          <label class="form-label" for="batch-name">Your name</label>
+          <input type="text" id="batch-name" name="name" placeholder="What do they call you?" required autocomplete="off" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="batch-niche">Your niche</label>
+          <input type="text" id="batch-niche" name="niche" placeholder="e.g. Genshin Impact content, dark anime edits, FPS coaching..." required autocomplete="off" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="batch-platform">Primary platform</label>
+          <select id="batch-platform" name="platform" required>
+            <option value="" disabled selected>Where does your content live?</option>
+            <option value="instagram">Instagram</option>
+            <option value="tiktok">TikTok</option>
+            <option value="twitter">Twitter / X</option>
+            <option value="youtube">YouTube</option>
+            <option value="multiple">Multiple platforms</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="batch-problem">Biggest problem with your current hooks</label>
+          <textarea id="batch-problem" name="problem" placeholder="Be specific — what's not working? Low saves? Scroll-past? Generic feel?" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary w-full" id="batchSubmitBtn">
+          <span id="batchBtnText">Apply for this Batch — ₹999</span>
+        </button>
+      </form>
+
+      <div class="batch-success" id="batchSuccess">
+        <div class="success-icon-lg">⚡</div>
+        <h3>You're in the queue.</h3>
+        <p>Your application is in. Only serious creators get selected — if you qualify, I'll DM you with payment details and confirmation within 48 hours.</p>
+        <p class="success-sub">Watch your notifications. Or → <a href="https://instagram.com/becatchywithsaad" target="_blank" rel="noopener">Follow on Instagram</a> to not miss future drops.</p>
+      </div>
+
+      <p class="batch-disclaimer">Payment is collected only after selection. No upfront lock-in.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">HOOKSMITH<span class="accent">.</span></div>
+      <p class="footer-line">Writing copy that makes people stop scrolling & start feeling.</p>
+      <div class="footer-links">
+        <a href="https://instagram.com/becatchywithsaad" target="_blank" rel="noopener">Instagram</a>
+        <span>·</span>
+        <a href="mailto:your@email.com">Email</a>
+      </div>
+      <p class="footer-copy">© 2025 Saad. All hooks reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    /* ---- Cursor ---- */
+    const cursor      = document.getElementById('cursor');
+    const cursorTrail = document.getElementById('cursorTrail');
+    let mouseX = 0, mouseY = 0, trailX = 0, trailY = 0;
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px';
+    });
+    function animateTrail() {
+      trailX += (mouseX - trailX) * 0.12;
+      trailY += (mouseY - trailY) * 0.12;
+      cursorTrail.style.left = trailX + 'px'; cursorTrail.style.top = trailY + 'px';
+      requestAnimationFrame(animateTrail);
+    }
+    animateTrail();
+
+    /* ---- Scroll Reveal ---- */
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    /* ---- Mobile Menu ---- */
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      const isOpen = mobileMenu.classList.contains('open');
+      const spans = hamburger.querySelectorAll('span');
+      if (isOpen) {
+        spans[0].style.transform = 'translateY(6.5px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-6.5px) rotate(-45deg)';
+      } else { spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = ''; }
+    });
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+      const spans = hamburger.querySelectorAll('span');
+      spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = '';
+    }
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobileMenu();
+    });
+
+    /* ---- BATCH TIMER (48hr, localStorage) ---- */
+    const BATCH_DURATION = 48 * 60 * 60 * 1000;
+
+    function initBatchTimer() {
+      let batchStart = localStorage.getItem('hs_batchStart');
+      const now = Date.now();
+
+      if (!batchStart || (now - parseInt(batchStart)) >= BATCH_DURATION) {
+        // New batch cycle
+        batchStart = now.toString();
+        localStorage.setItem('hs_batchStart', batchStart);
+        // Reset slots for new batch
+        localStorage.removeItem('hs_batchSlots');
+      }
+
+      let prevSeconds = -1;
+      function tick() {
+        const elapsed = Date.now() - parseInt(batchStart);
+        const remaining = BATCH_DURATION - elapsed;
+
+        if (remaining <= 0) {
+          // Batch over — reset
+          localStorage.setItem('hs_batchStart', Date.now().toString());
+          localStorage.removeItem('hs_batchSlots');
+          location.reload();
+          return;
+        }
+
+        const hours   = Math.floor(remaining / (1000 * 60 * 60));
+        const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+
+        const hEl = document.getElementById('timer-h');
+        const mEl = document.getElementById('timer-m');
+        const sEl = document.getElementById('timer-s');
+
+        hEl.textContent = String(hours).padStart(2, '0');
+        mEl.textContent = String(minutes).padStart(2, '0');
+        sEl.textContent = String(seconds).padStart(2, '0');
+
+        // Flash seconds on change
+        if (seconds !== prevSeconds) {
+          sEl.classList.remove('timer-flash');
+          void sEl.offsetWidth; // reflow
+          sEl.classList.add('timer-flash');
+          prevSeconds = seconds;
+        }
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    /* ---- SLOT COUNTER (random 12–43, localStorage) ---- */
+    function initSlots() {
+      let slots = localStorage.getItem('hs_batchSlots');
+      if (!slots) {
+        slots = Math.floor(Math.random() * (43 - 12 + 1)) + 12;
+        localStorage.setItem('hs_batchSlots', slots.toString());
+      } else {
+        slots = parseInt(slots);
+      }
+
+      const pct = Math.round((slots / 50) * 100);
+      const remaining = 50 - slots;
+
+      document.getElementById('slotsFilled').textContent = slots;
+
+      // Animate bar on load with slight delay for effect
+      setTimeout(() => {
+        document.getElementById('slotBarFill').style.width = pct + '%';
+      }, 300);
+
+      const warningEl = document.getElementById('slotWarning');
+      if (remaining <= 10) {
+        warningEl.innerHTML = `🔥 <strong style="color:var(--accent)">${remaining} slots remaining</strong> — filling fast`;
+      } else {
+        warningEl.textContent = `🔥 ${remaining} slots remaining in this batch`;
+      }
+    }
+
+    /* ---- FORM SUBMIT ---- */
+    function handleBatchSubmit(e) {
+      e.preventDefault();
+      const btn    = document.getElementById('batchSubmitBtn');
+      const btnTxt = document.getElementById('batchBtnText');
+      btn.disabled = true;
+      btnTxt.textContent = 'Sending...';
+
+      const formData = new FormData(e.target);
+      console.log('Batch application:', Object.fromEntries(formData.entries()));
+
+      setTimeout(() => {
+        document.getElementById('batchForm').style.display   = 'none';
+        document.getElementById('batchSuccess').classList.add('show');
+      }, 1200);
+    }
+
+    /* ---- INIT ---- */
+    initBatchTimer();
+    initSlots();
+  </script>
+</body>
+</html>

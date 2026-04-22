@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work With Me | HOOKSMITH</title>
+  <meta name="description" content="Two ways to work with Saad — casual Instagram collab or a serious strategy call. Choose your path." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ---- COLLAB PAGE SPECIFIC ---- */
+
+    /* Back link */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted); transition: color 0.2s;
+      margin-bottom: 32px;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { transition: transform 0.2s; }
+    .back-link:hover svg { transform: translateX(-3px); }
+
+    /* Page header */
+    .collab-hero {
+      padding: calc(var(--nav-h) + 80px) clamp(20px, 5vw, 60px) 80px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      position: relative;
+    }
+    .collab-hero-bg {
+      position: absolute;
+      top: 55%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-display);
+      font-size: clamp(100px, 18vw, 260px);
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(71,212,255,0.04);
+      pointer-events: none; user-select: none; white-space: nowrap;
+    }
+    .collab-hero-content { position: relative; z-index: 1; text-align: center; max-width: 700px; margin: 0 auto; }
+    .collab-hero-content h1 {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 9vw, 96px);
+      letter-spacing: 0.01em;
+      line-height: 0.95;
+      margin-bottom: 20px;
+    }
+    .collab-hero-content p {
+      color: var(--text-muted);
+      font-size: 16px; line-height: 1.7;
+      max-width: 480px; margin: 0 auto;
+    }
+    .title-stroke {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--accent);
+    }
+    .title-stroke-cyan {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--accent-2);
+    }
+
+    /* PATH CHOOSER */
+    .path-section {
+      padding: 0 clamp(20px, 5vw, 60px) 120px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .path-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* Path cards */
+    .path-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+    .path-card--ig {
+      border-color: rgba(71,212,255,0.15);
+    }
+    .path-card--ig:hover { border-color: rgba(71,212,255,0.4); }
+    .path-card--call {
+      border-color: rgba(232,255,71,0.15);
+      background: linear-gradient(135deg, var(--bg-card), rgba(232,255,71,0.02));
+    }
+    .path-card--call:hover { border-color: rgba(232,255,71,0.4); }
+
+    .path-number {
+      position: absolute;
+      top: -20px; left: 32px;
+      font-family: var(--font-display);
+      font-size: 80px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: transparent;
+      pointer-events: none;
+      user-select: none;
+    }
+    .path-card--ig .path-number { -webkit-text-stroke: 1px rgba(71,212,255,0.12); }
+    .path-card--call .path-number { -webkit-text-stroke: 1px rgba(232,255,71,0.12); }
+
+    .path-header { display: flex; flex-direction: column; gap: 12px; }
+    .path-badge {
+      display: inline-flex;
+      font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 999px;
+      width: fit-content;
+    }
+    .path-badge--ig {
+      color: var(--accent-2);
+      background: rgba(71,212,255,0.08);
+      border: 1px solid rgba(71,212,255,0.25);
+    }
+    .path-badge--call {
+      color: var(--accent);
+      background: rgba(232,255,71,0.08);
+      border: 1px solid rgba(232,255,71,0.25);
+    }
+    .path-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+    .path-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* Path details list */
+    .path-details { display: flex; flex-direction: column; gap: 10px; }
+    .path-detail-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13px; color: var(--text-muted); line-height: 1.5;
+    }
+    .path-detail-item .icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+    /* Warning tag */
+    .path-warning {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.02);
+    }
+
+    /* Divider */
+    .path-or {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 0;
+    }
+    .path-or-text {
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      padding: 0 16px;
+    }
+
+    /* ---- CALL APPLICATION FORM ---- */
+    .call-form-wrap {
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 4px;
+    }
+    .call-form-wrap.open { display: flex; }
+
+    .call-form-toggle {
+      width: 100%;
+    }
+
+    .call-timer-mini {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border: 1px solid rgba(232,255,71,0.15);
+      border-radius: var(--radius);
+      background: rgba(232,255,71,0.03);
+    }
+    .call-timer-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+    .call-timer-value {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+    }
+    .call-timer-suffix {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-left: auto;
+    }
+
+    /* Call form fields */
+    .call-form {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .call-form input,
+    .call-form textarea,
+    .call-form select {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border-hi);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: none; appearance: none;
+    }
+    .call-form input::placeholder,
+    .call-form textarea::placeholder { color: var(--text-dim); }
+    .call-form input:focus,
+    .call-form textarea:focus,
+    .call-form select:focus {
+      border-color: rgba(232,255,71,0.5);
+      box-shadow: 0 0 0 3px rgba(232,255,71,0.07);
+    }
+    .call-form select { cursor: pointer; }
+    .call-form select option { background: var(--bg-card); }
+    .form-label {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 6px; display: block;
+    }
+    .form-group { display: flex; flex-direction: column; }
+
+    /* Call success */
+    .call-success {
+      display: none; text-align: center;
+      padding: 48px 24px;
+      border: 1px solid rgba(232,255,71,0.25);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--bg-card), rgba(232,255,71,0.03));
+    }
+    .call-success.show { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    .call-success-icon { font-size: 40px; animation: bounce 0.6s ease; }
+    .call-success h3 { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.05em; }
+    .call-success p { color: var(--text-muted); font-size: 14px; line-height: 1.7; max-width: 400px; }
+
+    /* Friction badge */
+    .friction-note {
+      font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: center;
+      padding: 8px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .path-grid {
+        grid-template-columns: 1fr;
+        max-width: 560px;
+        margin: 0 auto;
+      }
+      .path-or { display: none; }
+    }
+    @media (max-width: 480px) {
+      .path-card { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">HOOKSMITH<span class="accent">.</span></a>
+    <div class="nav-links">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#offer">Offer</a>
+      <a href="index.html#cta" class="nav-cta">Get Free Hooks →</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#work" onclick="closeMobileMenu()">Work</a>
+    <a href="index.html#offer" onclick="closeMobileMenu()">Offer</a>
+    <a href="index.html#cta" onclick="closeMobileMenu()">Get Free Hooks →</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="collab-hero">
+    <div class="collab-hero-bg" aria-hidden="true">COLLAB</div>
+    <div class="collab-hero-content">
+      <a href="index.html" class="back-link reveal">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M11 7H3M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to main
+      </a>
+      <span class="section-tag reveal">// CHOOSE YOUR PATH</span>
+      <h1 class="reveal reveal-delay-1">
+        How do you want<br />
+        to <span class="title-stroke">work with me?</span>
+      </h1>
+      <p class="reveal reveal-delay-2">
+        Two paths. Different energy. Pick the one that matches what you actually need.
+      </p>
+    </div>
+  </section>
+
+  <!-- PATHS -->
+  <section class="path-section">
+    <div class="path-grid">
+
+      <!-- PATH 1: Instagram Collab -->
+      <div class="path-card path-card--ig reveal">
+        <div class="path-number" aria-hidden="true">01</div>
+
+        <div class="path-header">
+          <span class="path-badge path-badge--ig">Instagram Collab</span>
+          <h2 class="path-title">Casual.<br /><span class="title-stroke-cyan">Low friction.</span></h2>
+          <p class="path-desc">
+            For brand vibes, creative exchanges, casual discussions, or just vibing on a quick project. No contracts. No calls. Just a DM.
+          </p>
+        </div>
+
+        <div class="path-details">
+          <div class="path-detail-item">
+            <span class="icon">💬</span>
+            <span>Casual back-and-forth. No formality required.</span>
+          </div>
+          <div class="path-detail-item">
+            <span class="icon">🎨</span>
+            <span>Good for: creative collabs, brand shoutouts, one-off vibes.</span>
+          </div>
+          <div class="path-detail-item">
+            <span class="icon">⏱️</span>
+            <span>Response time: 24–48 hrs. Not instant — I'm building, not browsing.</span>
+          </div>
+        </div>
+
+        <div class="path-warning">
+          <span>⚠️</span>
+          <span>Not for urgent projects or paid work discussions</span>
+        </div>
+
+        <a
+          href="https://instagram.com/becatchywithsaad"
+          target="_blank"
+          rel="noopener"
+          class="btn-ghost w-full"
+          style="border-color: rgba(71,212,255,0.3); color: var(--accent-2); justify-content: center;"
+          onmouseover="this.style.borderColor='var(--accent-2)'; this.style.color='var(--accent-2)'"
+        >
+          DM on Instagram →
+        </a>
+      </div>
+
+      <!-- PATH 2: Strategy Call -->
+      <div class="path-card path-card--call reveal">
+        <div class="path-number" aria-hidden="true">02</div>
+
+        <div class="path-header">
+          <span class="path-badge path-badge--call">Strategy Call</span>
+          <h2 class="path-title">Serious.<br /><span class="title-stroke">High intent.</span></h2>
+          <p class="path-desc">
+            For paid projects, ongoing retainers, or scaling your content with real strategy behind it. Apply first. Not everyone gets a slot.
+          </p>
+        </div>
+
+        <div class="path-details">
+          <div class="path-detail-item">
+            <span class="icon">🎯</span>
+            <span>For paid work, long-term collabs, or content strategy input.</span>
+          </div>
+          <div class="path-detail-item">
+            <span class="icon">🔐</span>
+            <span>Application-based. I only take calls I know I can deliver on.</span>
+          </div>
+          <div class="path-detail-item">
+            <span class="icon">📅</span>
+            <span>New call slots open every 72 hours — limited spots per window.</span>
+          </div>
+        </div>
+
+        <!-- Mini timer for next call slots -->
+        <div class="call-timer-mini" id="callTimerBlock">
+          <span class="call-timer-label">Next slots open in</span>
+          <span class="call-timer-value" id="callTimerDisplay">--:--:--</span>
+          <span class="call-timer-suffix">remaining</span>
+        </div>
+
+        <!-- Toggle button - shows form -->
+        <button class="btn-primary w-full call-form-toggle" id="applyToggleBtn" onclick="openCallForm()">
+          Apply for a Strategy Call →
+        </button>
+
+        <!-- CALL APPLICATION FORM (hidden by default) -->
+        <div class="call-form-wrap" id="callFormWrap">
+
+          <div class="call-success" id="callSuccess">
+            <div class="call-success-icon">📅</div>
+            <h3>Application sent.</h3>
+            <p>If you're a fit, I'll reach out within 48 hours with a time that works. Keep an eye on your Instagram DMs.</p>
+          </div>
+
+          <form class="call-form" id="callForm" name="call-applications" netlify onsubmit="handleCallSubmit(event)">
+            <div class="form-group">
+              <label class="form-label" for="call-name">Name</label>
+              <input type="text" id="call-name" name="name" placeholder="Your name" required autocomplete="off" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="call-reach">Monthly reach / followers</label>
+              <select id="call-reach" name="reach" required>
+                <option value="" disabled selected>Where are you at right now?</option>
+                <option value="under-1k">Under 1K</option>
+                <option value="1k-10k">1K – 10K</option>
+                <option value="10k-50k">10K – 50K</option>
+                <option value="50k-100k">50K – 100K</option>
+                <option value="100k+">100K+</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="call-goal">What do you want from this call?</label>
+              <textarea id="call-goal" name="goal" placeholder="Be specific — content strategy? Brand voice overhaul? Ongoing hook retainer?" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="call-budget">Budget range</label>
+              <select id="call-budget" name="budget" required>
+                <option value="" disabled selected>Monthly budget for content/copy work</option>
+                <option value="under-5k">Under ₹5,000/month</option>
+                <option value="5k-15k">₹5,000 – ₹15,000/month</option>
+                <option value="15k-30k">₹15,000 – ₹30,000/month</option>
+                <option value="30k+">₹30,000+/month</option>
+                <option value="project">One-time project budget</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="call-ig">Instagram handle</label>
+              <input type="text" id="call-ig" name="instagram" placeholder="@yourhandle — for follow-up DM" required autocomplete="off" />
+            </div>
+
+            <button type="submit" class="btn-primary w-full" id="callSubmitBtn">
+              <span id="callBtnText">Submit Application →</span>
+            </button>
+            <p class="friction-note">Incomplete or vague applications are skipped — no exceptions.</p>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">HOOKSMITH<span class="accent">.</span></div>
+      <p class="footer-line">Writing copy that makes people stop scrolling & start feeling.</p>
+      <div class="footer-links">
+        <a href="https://instagram.com/becatchywithsaad" target="_blank" rel="noopener">Instagram</a>
+        <span>·</span>
+        <a href="mailto:your@email.com">Email</a>
+      </div>
+      <p class="footer-copy">© 2025 Saad. All hooks reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    /* ---- Cursor ---- */
+    const cursor      = document.getElementById('cursor');
+    const cursorTrail = document.getElementById('cursorTrail');
+    let mouseX = 0, mouseY = 0, trailX = 0, trailY = 0;
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px';
+    });
+    function animateTrail() {
+      trailX += (mouseX - trailX) * 0.12;
+      trailY += (mouseY - trailY) * 0.12;
+      cursorTrail.style.left = trailX + 'px'; cursorTrail.style.top = trailY + 'px';
+      requestAnimationFrame(animateTrail);
+    }
+    animateTrail();
+
+    /* ---- Scroll Reveal ---- */
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    /* ---- Mobile Menu ---- */
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      const isOpen = mobileMenu.classList.contains('open');
+      const spans = hamburger.querySelectorAll('span');
+      if (isOpen) {
+        spans[0].style.transform = 'translateY(6.5px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-6.5px) rotate(-45deg)';
+      } else { spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = ''; }
+    });
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+      const spans = hamburger.querySelectorAll('span');
+      spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = '';
+    }
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobileMenu();
+    });
+
+    /* ---- CALL SLOTS TIMER (72hr window, localStorage) ---- */
+    const CALL_WINDOW = 72 * 60 * 60 * 1000;
+
+    function initCallTimer() {
+      let callWindowStart = localStorage.getItem('hs_callWindow');
+      const now = Date.now();
+
+      if (!callWindowStart || (now - parseInt(callWindowStart)) >= CALL_WINDOW) {
+        callWindowStart = now.toString();
+        localStorage.setItem('hs_callWindow', callWindowStart);
+      }
+
+      function tick() {
+        const elapsed = Date.now() - parseInt(callWindowStart);
+        const remaining = CALL_WINDOW - elapsed;
+
+        if (remaining <= 0) {
+          localStorage.setItem('hs_callWindow', Date.now().toString());
+          location.reload();
+          return;
+        }
+
+        const hours   = Math.floor(remaining / (1000 * 60 * 60));
+        const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+        document.getElementById('callTimerDisplay').textContent =
+          `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    /* ---- FORM: open call form ---- */
+    function openCallForm() {
+      const wrap = document.getElementById('callFormWrap');
+      const btn  = document.getElementById('applyToggleBtn');
+      wrap.classList.add('open');
+      btn.style.display = 'none';
+      // Smooth scroll to form
+      setTimeout(() => {
+        wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+
+    /* ---- FORM: call submit ---- */
+    function handleCallSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('callSubmitBtn');
+      const txt = document.getElementById('callBtnText');
+      btn.disabled = true;
+      txt.textContent = 'Sending...';
+
+      const formData = new FormData(e.target);
+      console.log('Call application:', Object.fromEntries(formData.entries()));
+
+      setTimeout(() => {
+        document.getElementById('callForm').style.display = 'none';
+        document.getElementById('callSuccess').classList.add('show');
+      }, 1200);
+    }
+
+    /* ---- INIT ---- */
+    initCallTimer();
+  </script>
+</body>
+</html>

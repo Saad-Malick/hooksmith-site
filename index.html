@@ -202,6 +202,43 @@
       .cs-card { grid-template-columns: 1fr; gap: 36px; padding: 32px 24px; }
     }
 
+    /* CS card — glow on enter */
+    @keyframes cs-border-glow {
+      0%   { box-shadow: 0 0 0px rgba(232,255,71,0); border-color: var(--border); }
+      40%  { box-shadow: 0 0 28px rgba(232,255,71,0.18); border-color: rgba(232,255,71,0.5); }
+      100% { box-shadow: 0 0 0px rgba(232,255,71,0); border-color: var(--border-hi); }
+    }
+    .cs-card.cs-active { animation: cs-border-glow 1.4s ease forwards; }
+
+    /* Hook example — staggered line reveal */
+    .cs-hook-before,
+    .cs-hook-arrow,
+    .cs-hook-after {
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .cs-card.cs-active .cs-hook-before { opacity: 1; transform: none; transition-delay: 0.3s; }
+    .cs-card.cs-active .cs-hook-arrow  { opacity: 1; transform: none; transition-delay: 0.55s; }
+    .cs-card.cs-active .cs-hook-after  { opacity: 1; transform: none; transition-delay: 0.75s; color: var(--accent); }
+
+    .cs-hook-arrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      padding: 4px 0;
+      letter-spacing: 0.06em;
+    }
+
+    /* Metric count-up — number flashes accent on complete */
+    .cs-metric-num.counted { color: var(--accent); }
+    @keyframes metric-pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+    .cs-metric-num.pop { animation: metric-pop 0.3s ease; }
+
     /* ===================== EUR TOGGLE ===================== */
     .currency-toggle {
       display: flex;
@@ -563,18 +600,20 @@
           <p class="cs-summary">A mid-size gaming content creator (12K followers, FPS niche) was seeing flat reel performance — saves and shares were almost zero. I rewrote the opening 3 seconds of their next 5 reels using pattern-interrupt hooks and genre-native language. No other variable changed.</p>
           <div class="cs-hook-example">
             <div class="cs-hook-label">// Before → After (Hook rewrite sample)</div>
-            <p>"New video out now! Ranked gameplay, hope you enjoy 🎮"<br /><br />→ "You're not losing because of your aim. You're losing at second 3 of the round. Here's why."</p>
+            <p class="cs-hook-before">"New video out now! Ranked gameplay, hope you enjoy 🎮"</p>
+            <p class="cs-hook-arrow">↓ &nbsp;rewritten</p>
+            <p class="cs-hook-after">"You're not losing because of your aim. You're losing at second 3 of the round. Here's why."</p>
           </div>
         </div>
 
         <div class="cs-right">
           <div class="cs-metrics">
             <div class="cs-metric">
-              <span class="cs-metric-num">3.2×</span>
+              <span class="cs-metric-num" data-count="3.2" data-suffix="×" data-decimals="1">3.2×</span>
               <span class="cs-metric-label">Average reach increase across 5 reels vs prior 30-day baseline</span>
             </div>
             <div class="cs-metric">
-              <span class="cs-metric-num">+84%</span>
+              <span class="cs-metric-num" data-count="84" data-prefix="+" data-suffix="%" data-decimals="0">+84%</span>
               <span class="cs-metric-label">Save rate improvement — audience retention past the 3-second hook</span>
             </div>
             <div class="cs-metric">
@@ -733,6 +772,59 @@
         document.getElementById('toggleINR').classList.add('active');
         document.getElementById('toggleEUR').classList.remove('active');
       }
+    }
+
+    /* ---- Geo-detect: auto EUR for European visitors ---- */
+    const EU_COUNTRIES = new Set([
+      'AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI',
+      'FR','GR','HR','HU','IE','IT','LT','LU','LV','MT',
+      'NL','PL','PT','RO','SE','SI','SK',
+      'NO','IS','CH','GB','AL','BA','ME','MK','RS','XK'
+    ]);
+    (async () => {
+      try {
+        const res  = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+        if (EU_COUNTRIES.has(data.country_code)) setCurrency('eur');
+      } catch (_) { /* silently fail — manual toggle still works */ }
+    })();
+
+    /* ---- Case Study: glow + count-up on enter ---- */
+    function countUp(el) {
+      const target   = parseFloat(el.dataset.count);
+      const decimals = parseInt(el.dataset.decimals ?? 0);
+      const prefix   = el.dataset.prefix ?? '';
+      const suffix   = el.dataset.suffix ?? '';
+      const duration = 900;
+      const start    = performance.now();
+
+      function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const ease     = 1 - Math.pow(1 - progress, 3); // cubic ease-out
+        const value    = (ease * target).toFixed(decimals);
+        el.textContent = prefix + value + suffix;
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.classList.add('pop');
+          setTimeout(() => el.classList.remove('pop'), 300);
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    const csCard = document.querySelector('.cs-card');
+    if (csCard) {
+      const csObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            csCard.classList.add('cs-active');
+            csCard.querySelectorAll('[data-count]').forEach(el => countUp(el));
+            csObserver.unobserve(csCard);
+          }
+        });
+      }, { threshold: 0.2 });
+      csObserver.observe(csCard);
     }
 
     /* ---- Real Netlify Form Submission ---- */

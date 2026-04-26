@@ -6,6 +6,25 @@
   <title>Hook Pack — ₹999 Batch | HOOKSMITH</title>
   <meta name="description" content="10 custom hooks per batch. 50 slots. Drops every 48 hours. Gaming & anime niche only." />
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://hookzsmith.netlify.app/batch.html" />
+  <meta property="og:title"       content="Hook Pack — Batch Drop | Hooksmith" />
+  <meta property="og:description" content="10 custom hooks. 50 slots. Gaming & anime niche only. ₹999/drop." />
+  <meta property="og:image"       content="https://hookzsmith.netlify.app/og-image.png" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Hook Pack — Batch Drop | Hooksmith" />
+  <meta name="twitter:description" content="10 custom hooks. 50 slots. Gaming & anime niche only." />
+  <meta name="twitter:image"       content="https://hookzsmith.netlify.app/og-image.png" />
+
+  <!-- Analytics -->
+  <script defer data-domain="hookzsmith.netlify.app" src="https://plausible.io/js/script.js"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
@@ -602,15 +621,9 @@
       <h2 class="reveal reveal-delay-1">Tell me about<br /><em>your brand.</em></h2>
       <p class="reveal reveal-delay-2">Fill this out seriously. Vague answers get skipped. Serious ones get selected.</p>
 
-      <form class="batch-form reveal reveal-delay-3" id="batchForm" name="batch-requests" method="POST" data-netlify="true">
-
-<input type="hidden" name="form-name" value="batch-requests">
-
-<input type="text" name="name" placeholder="Your name" required>
-<input type="email" name="email" placeholder="Email" required>
-<textarea name="message" placeholder="Tell me about your project"></textarea>
-   
-     <div class="form-group">
+      <form class="batch-form reveal reveal-delay-3" id="batchForm" name="batch-requests" method="POST" data-netlify="true" onsubmit="handleBatchSubmit(event)">
+        <input type="hidden" name="form-name" value="batch-requests" />
+        <div class="form-group">
           <label class="form-label" for="batch-name">Your name</label>
           <input type="text" id="batch-name" name="name" placeholder="What do they call you?" required autocomplete="off" />
         </div>
@@ -646,7 +659,7 @@
         <div class="success-icon-lg">⚡</div>
         <h3>You're in the queue.</h3>
         <p>Your application is in. Only serious creators get selected — if you qualify, I'll DM you with payment details and confirmation within 48 hours.</p>
-        <p class="success-sub">Watch your notifications. Or → <a href="https://instagram.com/becatchywithsaad" target="_blank" rel="noopener">Follow on Instagram</a> to not miss future drops.</p>
+        <p class="success-sub">Watch your notifications. Or → <a href="https://www.instagram.com/becatchywithsaad/" target="_blank" rel="noopener">Follow on Instagram</a> to not miss future drops.</p>
       </div>
 
       <p class="batch-disclaimer">Payment is collected only after selection. No upfront lock-in.</p>
@@ -659,11 +672,13 @@
       <div class="footer-logo">HOOKSMITH<span class="accent">.</span></div>
       <p class="footer-line">Writing copy that makes people stop scrolling & start feeling.</p>
       <div class="footer-links">
-        <a href="https://instagram.com/becatchywithsaad" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.instagram.com/becatchywithsaad/" target="_blank" rel="noopener">Instagram</a>
         <span>·</span>
-        <a href="mailto:your@email.com">Email</a>
+        <a href="https://www.linkedin.com/in/saad-malick-43734b263/" target="_blank" rel="noopener">LinkedIn</a>
+        <span>·</span>
+        <a href="mailto:saad@hookzsmith.com">Email</a>
       </div>
-      <p class="footer-copy">© 2025 Saad. All hooks reserved.</p>
+      <p class="footer-copy">© 2026 Saad. All hooks reserved.</p>
     </div>
   </footer>
 
@@ -799,21 +814,25 @@
       }
     }
 
-    /* ---- FORM SUBMIT ---- */
-    function handleBatchSubmit(e) {
-      
+    async function handleBatchSubmit(e) {
+      e.preventDefault();
       const btn    = document.getElementById('batchSubmitBtn');
       const btnTxt = document.getElementById('batchBtnText');
       btn.disabled = true;
       btnTxt.textContent = 'Sending...';
 
-      const formData = new FormData(e.target);
-      console.log('Batch application:', Object.fromEntries(formData.entries()));
-
-      setTimeout(() => {
-        document.getElementById('batchForm').style.display   = 'none';
+      try {
+        await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(e.target)).toString()
+        });
+        document.getElementById('batchForm').style.display = 'none';
         document.getElementById('batchSuccess').classList.add('show');
-      }, 1200);
+      } catch (err) {
+        btnTxt.textContent = 'Something went wrong — try again';
+        btn.disabled = false;
+      }
     }
 
     /* ---- INIT ---- */

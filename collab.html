@@ -6,6 +6,25 @@
   <title>Work With Me | HOOKSMITH</title>
   <meta name="description" content="Two ways to work with Saad — casual Instagram collab or a serious strategy call. Choose your path." />
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://hookzsmith.netlify.app/collab.html" />
+  <meta property="og:title"       content="Work With Me | Hooksmith" />
+  <meta property="og:description" content="Two ways to work together — quick Instagram collab or a serious strategy call. Choose your path." />
+  <meta property="og:image"       content="https://hookzsmith.netlify.app/og-image.png" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Work With Me | Hooksmith" />
+  <meta name="twitter:description" content="Two ways to work together — quick collab or strategy call." />
+  <meta name="twitter:image"       content="https://hookzsmith.netlify.app/og-image.png" />
+
+  <!-- Analytics -->
+  <script defer data-domain="hookzsmith.netlify.app" src="https://plausible.io/js/script.js"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
@@ -380,7 +399,7 @@
         </div>
 
         <a
-          href="https://instagram.com/becatchywithsaad"
+          href="https://www.instagram.com/becatchywithsaad/"
           target="_blank"
           rel="noopener"
           class="btn-ghost w-full"
@@ -466,10 +485,10 @@
               <label class="form-label" for="call-budget">Budget range</label>
               <select id="call-budget" name="budget" required>
                 <option value="" disabled selected>Monthly budget for content/copy work</option>
-                <option value="under-5k">Under ₹5,000/month</option>
-                <option value="5k-15k">₹5,000 – ₹15,000/month</option>
-                <option value="15k-30k">₹15,000 – ₹30,000/month</option>
-                <option value="30k+">₹30,000+/month</option>
+                <option value="under-5k">Under ₹5,000 / €55/month</option>
+                <option value="5k-15k">₹5,000 – ₹15,000 / €55–€165/month</option>
+                <option value="15k-30k">₹15,000 – ₹30,000 / €165–€330/month</option>
+                <option value="30k+">₹30,000+ / €330+/month</option>
                 <option value="project">One-time project budget</option>
               </select>
             </div>
@@ -496,11 +515,13 @@
       <div class="footer-logo">HOOKSMITH<span class="accent">.</span></div>
       <p class="footer-line">Writing copy that makes people stop scrolling & start feeling.</p>
       <div class="footer-links">
-        <a href="https://instagram.com/becatchywithsaad" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.instagram.com/becatchywithsaad/" target="_blank" rel="noopener">Instagram</a>
         <span>·</span>
-        <a href="mailto:your@email.com">Email</a>
+        <a href="https://www.linkedin.com/in/saad-malick-43734b263/" target="_blank" rel="noopener">LinkedIn</a>
+        <span>·</span>
+        <a href="mailto:saad@hookzsmith.com">Email</a>
       </div>
-      <p class="footer-copy">© 2025 Saad. All hooks reserved.</p>
+      <p class="footer-copy">© 2026 Saad. All hooks reserved.</p>
     </div>
   </footer>
 
@@ -598,20 +619,25 @@
     }
 
     /* ---- FORM: call submit ---- */
-    function handleCallSubmit(e) {
+    async function handleCallSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('callSubmitBtn');
       const txt = document.getElementById('callBtnText');
       btn.disabled = true;
       txt.textContent = 'Sending...';
 
-      const formData = new FormData(e.target);
-      console.log('Call application:', Object.fromEntries(formData.entries()));
-
-      setTimeout(() => {
+      try {
+        await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(e.target)).toString()
+        });
         document.getElementById('callForm').style.display = 'none';
         document.getElementById('callSuccess').classList.add('show');
-      }, 1200);
+      } catch (err) {
+        txt.textContent = 'Something went wrong — try again';
+        btn.disabled = false;
+      }
     }
 
     /* ---- INIT ---- */

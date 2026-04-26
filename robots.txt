@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hookzsmith.netlify.app/sitemap.xml

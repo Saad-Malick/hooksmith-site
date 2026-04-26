@@ -6,6 +6,25 @@
   <title>Saad — Hook Writer for Gaming & Anime Brands</title>
   <meta name="description" content="I turn game ideas into scroll-stopping hooks. Gen-Z gaming copy that actually converts." />
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://hookzsmith.netlify.app/" />
+  <meta property="og:title"       content="Hooksmith — Hook Writer for Gaming & Anime Brands" />
+  <meta property="og:description" content="Scroll-stopping copy for gaming & anime brands. Gen-Z energy. Main character voice. Get 3 free hooks." />
+  <meta property="og:image"       content="https://hookzsmith.netlify.app/og-image.png" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Hooksmith — Hook Writer for Gaming & Anime Brands" />
+  <meta name="twitter:description" content="Scroll-stopping copy for gaming & anime brands. Get 3 free hooks." />
+  <meta name="twitter:image"       content="https://hookzsmith.netlify.app/og-image.png" />
+
+  <!-- Analytics (Plausible — privacy-first, no cookies) -->
+  <script defer data-domain="hookzsmith.netlify.app" src="https://plausible.io/js/script.js"></script>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -661,7 +680,8 @@
       <h2 class="cta-title">3 free hooks.<br /><span class="title-stroke">Your brand. Right now.</span></h2>
       <p class="cta-sub">Drop your game/brand idea below. I'll send 3 hooks to your Instagram DM within 48 hours. No strings.</p>
 
-      <form class="cta-form" id="ctaForm" name="hook-requests" netlify onsubmit="handleSubmit(event)">
+      <form class="cta-form" id="ctaForm" name="hook-requests" method="POST" data-netlify="true" onsubmit="handleSubmit(event)">
+        <input type="hidden" name="form-name" value="hook-requests" />
         <div class="form-row">
           <input type="text" name="name" placeholder="Your name" required autocomplete="off" />
           <input type="text" name="brand" placeholder="Your game / brand idea" required autocomplete="off" />
@@ -677,7 +697,7 @@
         <div class="success-icon">⚡</div>
         <h3>You're in the queue.</h3>
         <p>I'll slide into your DMs within 48 hours with 3 custom hooks. Watch your notifications.</p>
-        <p class="success-sub">While you wait → <a href="https://instagram.com" target="_blank" rel="noopener">Follow on Instagram</a></p>
+        <p class="success-sub">While you wait → <a href="https://www.instagram.com/becatchywithsaad/" target="_blank" rel="noopener">Follow on Instagram</a></p>
       </div>
 
       <p class="cta-disclaimer">No spam. Just hooks. Unsubscribe anytime (by ignoring my DM, honestly).</p>
@@ -690,11 +710,13 @@
       <div class="footer-logo">HOOKSMITH<span class="accent">.</span></div>
       <p class="footer-line">Writing copy that makes people stop scrolling & start feeling.</p>
       <div class="footer-links">
-        <a href="https://instagram.com/becatchywithsaad" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.instagram.com/becatchywithsaad/" target="_blank" rel="noopener">Instagram</a>
         <span>·</span>
-        <a href="mailto:your@email.com">Email</a>
+        <a href="https://www.linkedin.com/in/saad-malick-43734b263/" target="_blank" rel="noopener">LinkedIn</a>
+        <span>·</span>
+        <a href="mailto:saad@hookzsmith.com">Email</a>
       </div>
-      <p class="footer-copy">© 2025 Saad. All hooks reserved.</p>
+      <p class="footer-copy">© 2026 Saad. All hooks reserved.</p>
     </div>
   </footer>
 
@@ -710,6 +732,31 @@
         document.body.classList.remove('eur-mode');
         document.getElementById('toggleINR').classList.add('active');
         document.getElementById('toggleEUR').classList.remove('active');
+      }
+    }
+
+    /* ---- Real Netlify Form Submission ---- */
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const btn    = document.getElementById('submitBtn');
+      const btnTxt = document.getElementById('btnText');
+      btn.disabled = true;
+      btnTxt.textContent = 'Sending...';
+
+      try {
+        await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(e.target)).toString()
+        });
+        document.getElementById('ctaForm').style.display = 'none';
+        const success = document.getElementById('formSuccess');
+        success.style.display       = 'flex';
+        success.style.flexDirection = 'column';
+        success.style.alignItems    = 'center';
+      } catch (err) {
+        btnTxt.textContent = 'Something went wrong — try again';
+        btn.disabled = false;
       }
     }
   </script>

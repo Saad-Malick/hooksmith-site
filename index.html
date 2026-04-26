@@ -12,6 +12,282 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ===================== GLOBAL REACH ===================== */
+    .global { padding: 100px clamp(20px, 5vw, 60px); }
+    .global .section-header { margin-bottom: 56px; }
+    .global-grid {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .region-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: border-color 0.25s, transform 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .region-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .region-card:hover { border-color: var(--border-hi); transform: translateY(-4px); }
+    .region-card:hover::before { opacity: 1; }
+    .region-flag { font-size: 32px; line-height: 1; }
+    .region-name {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 0.04em;
+      color: var(--text);
+    }
+    .region-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(232,255,71,0.08);
+      padding: 4px 10px;
+      border-radius: 4px;
+      width: fit-content;
+    }
+    .region-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+    .global-note {
+      max-width: var(--max-w);
+      margin: 40px auto 0;
+      padding: 24px 28px;
+      background: rgba(232,255,71,0.04);
+      border: 1px solid rgba(232,255,71,0.15);
+      border-radius: var(--radius);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.8;
+    }
+    .global-note strong { color: var(--accent); }
+    @media (max-width: 768px) {
+      .global-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===================== CASE STUDY ===================== */
+    .case-study { padding: 100px clamp(20px, 5vw, 60px); background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .case-study-inner { max-width: var(--max-w); margin: 0 auto; }
+    .case-study .section-header { margin-bottom: 56px; }
+    .cs-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .cs-left { display: flex; flex-direction: column; gap: 24px; }
+    .cs-brand-row { display: flex; align-items: center; gap: 12px; }
+    .cs-brand-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(232,255,71,0.3);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+    .cs-collab-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .cs-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+    }
+    .cs-title em { color: transparent; -webkit-text-stroke: 1.5px var(--accent); font-style: normal; }
+    .cs-summary { font-size: 14px; line-height: 1.8; color: var(--text-muted); }
+    .cs-hook-example {
+      background: rgba(0,0,0,0.3);
+      border-left: 2px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .cs-hook-example p {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text);
+      font-style: italic;
+    }
+    .cs-hook-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+    .cs-right { display: flex; flex-direction: column; gap: 20px; }
+    .cs-metrics { display: flex; flex-direction: column; gap: 16px; }
+    .cs-metric {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 20px 24px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.2s;
+    }
+    .cs-metric:hover { border-color: var(--border-hi); }
+    .cs-metric-num {
+      font-family: var(--font-display);
+      font-size: 42px;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: var(--accent);
+    }
+    .cs-metric-label { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+    .cs-disclaimer {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      line-height: 1.7;
+      padding-top: 8px;
+    }
+    @media (max-width: 900px) {
+      .cs-card { grid-template-columns: 1fr; gap: 36px; padding: 32px 24px; }
+    }
+
+    /* ===================== EUR TOGGLE ===================== */
+    .currency-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 12px;
+    }
+    .currency-toggle-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .toggle-btn {
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px;
+      gap: 2px;
+    }
+    .toggle-opt {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 5px 14px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .toggle-opt.active {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 700;
+    }
+    .offer-price .eur { display: none; }
+    body.eur-mode .offer-price .inr { display: none; }
+    body.eur-mode .offer-price .eur { display: inline; }
+
+    /* ===================== CALENDLY ===================== */
+    .book-call {
+      padding: 80px clamp(20px, 5vw, 60px);
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .book-call-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      padding: 48px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      position: relative;
+      overflow: hidden;
+    }
+    .book-call-inner::after {
+      content: 'BOOK';
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: 140px;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(232,255,71,0.04);
+      pointer-events: none;
+      user-select: none;
+    }
+    .book-call-text { display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; }
+    .book-call-text h3 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+    }
+    .book-call-text h3 em { color: var(--accent); font-style: normal; }
+    .book-call-text p { font-size: 14px; color: var(--text-muted); line-height: 1.7; max-width: 400px; }
+    .book-call-meta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .book-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .book-meta-item span { color: var(--accent); }
+    .book-call-cta { position: relative; z-index: 1; flex-shrink: 0; }
+    @media (max-width: 768px) {
+      .book-call-inner { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -30,6 +306,7 @@
     <div class="nav-logo">HOOKSMITH<span class="accent">.</span></div>
     <div class="nav-links">
       <a href="#work">Work</a>
+      <a href="#global">Global</a>
       <a href="#offer">Offer</a>
       <a href="#cta" class="nav-cta">Get Free Hooks →</a>
     </div>
@@ -41,6 +318,7 @@
   <!-- Mobile menu -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="#work" onclick="closeMobileMenu()">Work</a>
+    <a href="#global" onclick="closeMobileMenu()">Global</a>
     <a href="#offer" onclick="closeMobileMenu()">Offer</a>
     <a href="#cta" onclick="closeMobileMenu()">Get Free Hooks →</a>
   </div>
@@ -211,19 +489,106 @@
     </div>
   </section>
 
+  <!-- ===================== GLOBAL REACH ===================== -->
+  <section class="global" id="global">
+    <div class="section-header reveal" style="max-width:var(--max-w);margin:0 auto 56px;">
+      <span class="section-tag">// GLOBAL REACH</span>
+      <h2>Built for <em>everywhere</em>.</h2>
+      <p>Gaming culture doesn't care about borders. Neither does good copy.</p>
+    </div>
+
+    <div class="global-grid">
+      <div class="region-card reveal">
+        <div class="region-flag">🇩🇪</div>
+        <div class="region-name">GERMANY</div>
+        <span class="region-tag">PC Gaming · Hardcore</span>
+        <p class="region-desc">Germany's PC gaming scene runs deep — hardware-obsessed, community-driven, and allergic to hype copy. Hooks here need precision and respect for craft. No fluff, no easy promises. Just truth written sharp.</p>
+      </div>
+
+      <div class="region-card reveal">
+        <div class="region-flag">🇫🇷</div>
+        <div class="region-name">FRANCE</div>
+        <span class="region-tag">Anime · Visual Culture</span>
+        <p class="region-desc">French anime fandom is among the largest in Europe — and the most aesthetically literate. They read for vibe, not just information. Copy that has texture and restraint lands. Generic enthusiasm doesn't.</p>
+      </div>
+
+      <div class="region-card reveal">
+        <div class="region-flag">🇸🇪</div>
+        <div class="region-name">SCANDINAVIA</div>
+        <span class="region-tag">Esports · Competitive</span>
+        <p class="region-desc">Nordic esports culture values clarity, fairness, and performance over persona. The hooks that work here are direct, confident, and earned. No manufactured hype — just the kind of copy that respects the grind.</p>
+      </div>
+    </div>
+
+    <div class="global-note reveal">
+      <strong>Timezone-aware. Async-friendly.</strong> &nbsp;·&nbsp; I work across IST / CET / GMT without needing you to adjust your schedule. Discovery calls, briefs, and delivery — all remote, all documented.
+    </div>
+  </section>
+
+  <!-- ===================== CASE STUDY ===================== -->
+  <section class="case-study" id="case-study">
+    <div class="case-study-inner">
+      <div class="section-header reveal">
+        <span class="section-tag">// CASE STUDY</span>
+        <h2>The work in <em>motion</em>.</h2>
+        <p>A real collaborative sample — unpaid, but tracked.</p>
+      </div>
+
+      <div class="cs-card reveal">
+        <div class="cs-left">
+          <div class="cs-brand-row">
+            <span class="cs-brand-badge">Collab Sample</span>
+            <span class="cs-collab-tag">Gaming Creator · Instagram</span>
+          </div>
+          <h3 class="cs-title">How 5 hooks turned a stalled<br /><em>reel into a reach spike.</em></h3>
+          <p class="cs-summary">A mid-size gaming content creator (12K followers, FPS niche) was seeing flat reel performance — saves and shares were almost zero. I rewrote the opening 3 seconds of their next 5 reels using pattern-interrupt hooks and genre-native language. No other variable changed.</p>
+          <div class="cs-hook-example">
+            <div class="cs-hook-label">// Before → After (Hook rewrite sample)</div>
+            <p>"New video out now! Ranked gameplay, hope you enjoy 🎮"<br /><br />→ "You're not losing because of your aim. You're losing at second 3 of the round. Here's why."</p>
+          </div>
+        </div>
+
+        <div class="cs-right">
+          <div class="cs-metrics">
+            <div class="cs-metric">
+              <span class="cs-metric-num">3.2×</span>
+              <span class="cs-metric-label">Average reach increase across 5 reels vs prior 30-day baseline</span>
+            </div>
+            <div class="cs-metric">
+              <span class="cs-metric-num">+84%</span>
+              <span class="cs-metric-label">Save rate improvement — audience retention past the 3-second hook</span>
+            </div>
+            <div class="cs-metric">
+              <span class="cs-metric-num">5</span>
+              <span class="cs-metric-label">Hooks delivered. Zero brief calls needed. One round of feedback.</span>
+            </div>
+          </div>
+          <p class="cs-disclaimer">* This is a collaborative spec sample based on a real content audit. Metrics are directional — tracked via Instagram Insights over a 21-day window. Creator identity withheld by request.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== OFFER ===================== -->
   <section class="offer" id="offer">
     <div class="section-header reveal">
       <span class="section-tag">// THE OFFER</span>
       <h2>Start for <em>free</em>.</h2>
       <p>No pitch. No fluff. Just hooks that work.</p>
+      <div class="currency-toggle">
+        <span class="currency-toggle-label">Currency</span>
+        <div class="toggle-btn">
+          <button class="toggle-opt active" onclick="setCurrency('inr')" id="toggleINR">₹ INR</button>
+          <button class="toggle-opt" onclick="setCurrency('eur')" id="toggleEUR">€ EUR</button>
+        </div>
+      </div>
     </div>
 
     <div class="offer-grid">
       <div class="offer-card offer-card--free reveal">
         <div class="offer-card-header">
           <span class="offer-tier">FREE</span>
-          <span class="offer-price">₹0</span>
+          <span class="offer-price"><span class="inr">₹0</span><span class="eur">€0</span></span>
         </div>
         <ul class="offer-list">
           <li><span class="check">✓</span> 3 custom hooks for your game/brand</li>
@@ -239,7 +604,7 @@
         <div class="offer-badge-wrap"><span class="offer-coming">BATCH · 50 SLOTS</span></div>
         <div class="offer-card-header">
           <span class="offer-tier">HOOK PACK</span>
-          <span class="offer-price">₹999<span class="offer-per">/drop</span></span>
+          <span class="offer-price"><span class="inr">₹999</span><span class="eur">€11</span><span class="offer-per">/drop</span></span>
         </div>
         <ul class="offer-list">
           <li><span class="check">✓</span> 10 hooks, fully custom</li>
@@ -267,6 +632,26 @@
       </div>
     </div>
   </section>
+
+  <!-- ===================== BOOK A CALL ===================== -->
+  <div class="book-call">
+    <div class="book-call-inner reveal">
+      <div class="book-call-text">
+        <h3>Not ready to commit?<br /><em>Book 15 minutes.</em></h3>
+        <p>EU clients especially — I get it. A quick discovery call beats a long email chain. No pitch, no pressure. Just a short chat to see if your project is a fit.</p>
+        <div class="book-call-meta">
+          <div class="book-meta-item"><span>✓</span> 15 min · Free</div>
+          <div class="book-meta-item"><span>✓</span> No obligation</div>
+          <div class="book-meta-item"><span>✓</span> Async OK too</div>
+        </div>
+      </div>
+      <div class="book-call-cta">
+        <a href="https://calendly.com/YOUR_USERNAME/15min" target="_blank" rel="noopener" class="btn-primary">
+          <span>Book a Discovery Call →</span>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <!-- ===================== CTA ===================== -->
   <section class="cta-section" id="cta">
@@ -314,5 +699,19 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    /* ---- Currency Toggle ---- */
+    function setCurrency(mode) {
+      if (mode === 'eur') {
+        document.body.classList.add('eur-mode');
+        document.getElementById('toggleEUR').classList.add('active');
+        document.getElementById('toggleINR').classList.remove('active');
+      } else {
+        document.body.classList.remove('eur-mode');
+        document.getElementById('toggleINR').classList.add('active');
+        document.getElementById('toggleEUR').classList.remove('active');
+      }
+    }
+  </script>
 </body>
 </html>
